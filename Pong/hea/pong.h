@@ -1,0 +1,4 @@
+namespace pong
+{
+	void run();
+}
