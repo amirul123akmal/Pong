@@ -153,10 +153,12 @@ void Ball::update(const std::vector<Extension> &temp, double &timeDelta)
 	// Check for Screen Border
 	if (rectangle.x < 5)
 	{
+		right++;
 		reset();
 	}
 	if (rectangle.x > ScreenWidth - 45)
 	{
+		left++;
 		reset();
 	}
 	if (rectangle.y < 5)
@@ -177,4 +179,27 @@ void Ball::reset()
 	deltaX = 0;
 	deltaY = 0;
 	LRDecision();
+}
+Extension Ball::result()
+{
+	Extension resultness;
+	resultness.x = right;
+	resultness.y = left;
+	return resultness;
+}
+
+// Text
+Text::Text(const char filename[])
+{
+	coords.x = ScreenWidth / 2 - 75;
+	coords.y = 0;
+	coords.w = 200;
+	coords.h = 50;
+ 	font = TTF_OpenFont("open-sans/OpenSans-Bold.ttf", 100);
+}
+void Text::update(Extension result, SDL_Surface* ScreenOrigin)
+{
+	std::string character = std::to_string(result.y) + " : " + std::to_string(result.x);
+	image = TTF_RenderText_Solid(font, character.c_str(), color);
+	SDL_BlitSurface(image, NULL, ScreenOrigin, &coords);
 }
