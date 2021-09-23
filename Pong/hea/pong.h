@@ -7,3 +7,4 @@ namespace pong
 	void mainLoop();
 	void quitAll();
 }
+
