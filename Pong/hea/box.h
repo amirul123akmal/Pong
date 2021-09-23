@@ -11,7 +11,7 @@
 
 #define ScreenWidth 1920
 #define ScreenHeight 1080
-constexpr auto BallSpeed = 1;
+constexpr int BallSpeed = 1;
 
 class Box
 {	
@@ -36,15 +36,21 @@ public:
 };
 class Ball : public Box
 {
-	int moving = 0;
 	// False = ball start go toward left first
 	// True = ball start go toward right first
 	bool decision = false;
+	Extension initialPosition{};
 	int deltaX = 0, deltaY = 0;
 	void LRDecision();
 	int random();
+	void reset();
 public:
-	Ball(int x, int y, int w, int h, uint32_t color) : Box(x, y, w, h, color){};
+	Ball(int x, int y, int w, int h, uint32_t color) : Box(x, y, w, h, color){
+		initialPosition.x = x;
+		initialPosition.y = y;
+		initialPosition.w = w;
+		initialPosition.h = h;
+	};
 	void Init(const char filename[]);
 	void update(const std::vector<Extension>& temp, double &timeDelta);
 };
