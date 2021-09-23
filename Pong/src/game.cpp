@@ -78,6 +78,9 @@ namespace pong
 		uint8_t time;
 		double timeDelta = 0;
 
+		// Text for marks
+		Text marks("res/open-sans/OpenSans-Bold.ttf");
+
 		// The main loop
 		while (enable_loop)
 		{
@@ -119,6 +122,7 @@ namespace pong
 
 			Grouping.update(surface, background);
 			smallBall.update(Grouping.CoordY(), timeDelta);
+			marks.update(smallBall.result(), surface);
 			SDL_UpdateWindowSurface(window);
 			limitFPS(time);
 		}

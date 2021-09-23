@@ -7,6 +7,7 @@
 #include "Extension.h"
 
 #include <time.h>
+#include <string>
 #include <vector>
 
 #define ScreenWidth 1920
@@ -39,6 +40,8 @@ class Ball : public Box
 	int direction = 0;
 	Extension initialPosition{};
 	int deltaX = 0, deltaY = 0;
+	int left = 0;
+	int right = 0;
 	void LRDecision();
 	int random();
 	void reset();
@@ -51,11 +54,15 @@ public:
 	};
 	void Init(const char filename[]);
 	void update(const std::vector<Extension>& temp, double &timeDelta);
+	Extension result();
 };
 class Text
 {
-	int left = 0;
-	int right = 0;
+	SDL_Surface* image;
+	SDL_Rect coords;
+	TTF_Font *font;
+	SDL_Color color = { 0, 0, 0 };
 public:
-
+	Text(const char filename[]);
+	void update(Extension result, SDL_Surface* ScreenOrigin);
 };
