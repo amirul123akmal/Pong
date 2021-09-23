@@ -95,7 +95,7 @@ void Ball::LRDecision()
 		decision = true;
 	}
 }
-void Ball::update(const std::vector<Extension> &temp)
+void Ball::update(const std::vector<Extension> &temp, double &timeDelta)
 {
 	// Start Moving 
 	if (deltaX == 0 && deltaY == 0)
@@ -113,10 +113,10 @@ void Ball::update(const std::vector<Extension> &temp)
 	}
 
 	// the continous moving updation
-	rectangle.x += deltaX;
-	rectangle.y += deltaY;
-	rectangle.w += deltaX;
-	rectangle.h += deltaY;
+	rectangle.y += (deltaY * timeDelta);
+	rectangle.x += (deltaX * timeDelta);
+	rectangle.w += (deltaX * timeDelta);
+	rectangle.h += (deltaY * timeDelta);
 
 	// Check for players collision
 	if (rectangle.x < 32 && (rectangle.y > temp[0].y && rectangle.h < temp[0].h))

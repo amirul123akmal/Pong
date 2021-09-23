@@ -1,11 +1,12 @@
-#include <iostream>
-#include <SDL.h>
-
 #include <box.h>
 #include <pong.h>
 
-#define FPS 30
-#define DeltaMove 3
+#include <iostream>
+
+#include <SDL.h>
+
+#define FPS 120
+#define DeltaMove 1
 
 namespace pong
 {
@@ -25,21 +26,15 @@ namespace pong
 	}
 	void mainLoop()
 	{
+		// Screen
 		int Wwidth = MonitorWitdh * .9;
 		int Wheight = MonitorHeight * .9;
 
 		// Window Creation
 		SDL_Window* window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Wwidth, Wheight, SDL_WINDOW_FULLSCREEN_DESKTOP);
 
-		// Limiting FPS
-		uint8_t Ticks;
-
 		// Get Surface from window
 		SDL_Surface* surface = SDL_GetWindowSurface(window);
-
-		//  Event Tracking
-		SDL_Event any_event;
-		const uint8_t* keyPressed;
 
 		// Height coord
 		int height1 = (MonitorHeight / 2) - 100;
@@ -60,7 +55,6 @@ namespace pong
 		// Ball 
 		Ball smallBall(( ScreenWidth / 2 ) - 25 , ( ScreenHeight / 2 ) -25, 32, 32, red);
 		smallBall.Init("res/Image.bmp");
-
 		Grouping.add(&smallBall);
 
 		// For the background 
@@ -73,9 +67,25 @@ namespace pong
 		// Main Loop toggle variable
 		bool enable_loop = true;
 		SDL_ShowCursor(SDL_DISABLE);
+
+		//  Event Tracking
+		SDL_Event any_event;
+		const uint8_t* keyPressed;
+
+		// Limiting FPS
+		uint64_t Ticks = SDL_GetPerformanceCounter();
+		uint64_t last;
+		uint8_t time;
+		double timeDelta = 0;
+
+		// The main loop
 		while (enable_loop)
 		{
-			Ticks = SDL_GetTicks();
+			last = Ticks;
+			time = SDL_GetTicks();
+			Ticks = SDL_GetPerformanceCounter();
+			timeDelta = (double)((Ticks - last) * 1000 / SDL_GetPerformanceFrequency());
+
 			while (SDL_PollEvent(&any_event))
 			{
 				if (any_event.type == SDL_QUIT)
@@ -92,25 +102,25 @@ namespace pong
 			}
 			if (keyPressed[SDL_SCANCODE_UP])
 			{
-				player2.Update(DeltaMove);
+				player2.Update(DeltaMove * timeDelta);
 			}
 			if (keyPressed[SDL_SCANCODE_DOWN])
 			{
-				player2.Update(-DeltaMove);
+				player2.Update(-DeltaMove * timeDelta);
 			}
 			if (keyPressed[SDL_SCANCODE_W])
 			{
-				player1.Update(DeltaMove);
+				player1.Update(DeltaMove * timeDelta);
 			}
 			if (keyPressed[SDL_SCANCODE_S])
 			{
-				player1.Update(-DeltaMove);
+				player1.Update(-DeltaMove * timeDelta);
 			}
 
 			Grouping.update(surface, background);
-			smallBall.update(Grouping.CoordY());
+			smallBall.update(Grouping.CoordY(), timeDelta);
 			SDL_UpdateWindowSurface(window);
-			limitFPS(Ticks);
+			limitFPS(time);
 		}
 	}
 	void quitAll()

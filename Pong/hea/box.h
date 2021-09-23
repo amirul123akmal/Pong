@@ -1,3 +1,6 @@
+#pragma warning(disable :4244)
+#pragma warning(disable :4091)
+
 #include "SDL.h"
 #include "SDL_ttf.h"
 
@@ -8,7 +11,7 @@
 
 #define ScreenWidth 1920
 #define ScreenHeight 1080
-constexpr auto BallSpeed = 2;
+constexpr auto BallSpeed = 1;
 
 class Box
 {	
@@ -43,7 +46,7 @@ class Ball : public Box
 public:
 	Ball(int x, int y, int w, int h, uint32_t color) : Box(x, y, w, h, color){};
 	void Init(const char filename[]);
-	void update(const std::vector<Extension>& temp);
+	void update(const std::vector<Extension>& temp, double &timeDelta);
 };
 class Text
 {
