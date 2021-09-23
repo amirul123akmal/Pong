@@ -1,5 +1,7 @@
-#include <SDL.h>
-#include <SDL_ttf.h>
+#include "SDL.h"
+#include "SDL_ttf.h"
+
+#include "Extension.h"
 
 #include <time.h>
 #include <vector>
@@ -19,6 +21,7 @@ public:
 	Box(int x, int y,int w, int h,  uint32_t color);
 	void Draw(SDL_Surface* surface);
 	void Update(int h);
+	Extension give();
 };
 class GroupBox
 {
@@ -26,6 +29,7 @@ class GroupBox
 public:
 	void add(Box *box);
 	void update(SDL_Surface *surface, uint32_t color);
+	std::vector<Extension> CoordY();
 };
 class Ball : public Box
 {
@@ -39,7 +43,7 @@ class Ball : public Box
 public:
 	Ball(int x, int y, int w, int h, uint32_t color) : Box(x, y, w, h, color){};
 	void Init(const char filename[]);
-	void update();
+	void update(const std::vector<Extension>& temp);
 };
 class Text
 {

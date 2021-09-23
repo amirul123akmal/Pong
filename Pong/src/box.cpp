@@ -40,6 +40,12 @@ void Box::Update(int h)
 	rectangle.h -= h;
 	check();
 }
+Extension Box::give() {
+	Extension temp;
+	temp.y = rectangle.y;
+	temp.h = rectangle.h;
+	return temp;
+}
 
 // Players grouping
 void GroupBox::add(Box *box)
@@ -54,6 +60,13 @@ void GroupBox::update(SDL_Surface* surface, uint32_t color)
 		groups[i]->Draw(surface);
 	}
 }
+std::vector<Extension> GroupBox::CoordY() {
+	std::vector<Extension> temp;
+	temp.push_back(groups[0]->give());
+	temp.push_back(groups[1]->give());
+	return temp;
+}
+
 
 // Ball 
 int Ball::random()
@@ -82,7 +95,7 @@ void Ball::LRDecision()
 		decision = true;
 	}
 }
-void Ball::update()
+void Ball::update(const std::vector<Extension> &temp)
 {
 	// Start Moving 
 	if (deltaX == 0 && deltaY == 0)
@@ -106,7 +119,14 @@ void Ball::update()
 	rectangle.h += deltaY;
 
 	// Check for players collision
-
+	if (rectangle.x < 32 && (rectangle.y > temp[0].y && rectangle.h < temp[0].h))
+	{
+		deltaX = BallSpeed;
+	}
+	if (rectangle.x > ScreenWidth - 40 - 50 && (rectangle.y > temp[1].y && rectangle.h < temp[1].h))
+	{
+		deltaX = -BallSpeed;
+	}
 
 	// Check for Screen Border
 	if (rectangle.x < 5)
