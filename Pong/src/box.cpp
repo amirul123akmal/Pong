@@ -119,11 +119,11 @@ void Ball::update(const std::vector<Extension> &temp, double &timeDelta)
 	rectangle.h += (deltaY * timeDelta);
 
 	// Check for players collision
-	if (rectangle.x < 32 && (rectangle.y > temp[0].y && rectangle.h < temp[0].h))
+	if (rectangle.x < 57 && (rectangle.y >( temp[0].y - 45 ) && rectangle.h < temp[0].h))
 	{
 		deltaX = BallSpeed;
 	}
-	if (rectangle.x > ScreenWidth - 40 - 50 && (rectangle.y > temp[1].y && rectangle.h < temp[1].h))
+	if (rectangle.x > ( ScreenWidth - 55 - 10 - 45 ) && (rectangle.y > (temp[1].y - 45)&& rectangle.h < temp[1].h))
 	{
 		deltaX = -BallSpeed;
 	}

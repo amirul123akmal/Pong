@@ -44,8 +44,8 @@ namespace pong
 		uint32_t red = SDL_MapRGB(surface->format, 255, 0, 0);
 		uint32_t blue = SDL_MapRGB(surface->format, 0, 0, 255);
 
-		Box player1(10, height1, 30, 200, red);
-		Box player2( MonitorWitdh - 40 ,height2, 30, 200, blue);
+		Box player1(25, height1, 30, 200, red);
+		Box player2( MonitorWitdh - 55 ,height2, 30, 200, blue);
 
 		// Centralized the players
 		GroupBox Grouping;
