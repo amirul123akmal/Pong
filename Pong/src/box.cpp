@@ -64,7 +64,6 @@ std::vector<Extension> GroupBox::CoordY() {
 	return temp;
 }
 
-
 // Ball 
 int Ball::random()
 {
@@ -86,32 +85,55 @@ void Ball::Init(const char filename[])
 }
 void Ball::LRDecision()
 {	
-	if (random() % 2 == 0)
+	int temp = random();
+	if (temp < 75)
 	{
-		decision = true;
+		direction = 1;
 	}
-	else
+	if ( temp >= 75 && temp < 50)
 	{
-		decision = false;
+		direction = 2;
 	}
+	if (temp >= 50 && temp < 25)
+	{
+		direction = 3;
+	}
+	if (temp >= 25)
+	{
+		direction = 4;
+	}
+
 }
 void Ball::update(const std::vector<Extension> &temp, double &timeDelta)
 {
 	// Start Moving 
 	if (deltaX == 0 && deltaY == 0)
 	{
-		if (decision)
+		if (direction == 1)
 		{
+			// top right
 			deltaX = BallSpeed;
 			deltaY = BallSpeed;
 		}
-		else
+		if (direction == 2)
 		{
+			// top left
+			deltaX = -BallSpeed;
+			deltaY = BallSpeed;
+		}
+		if (direction == 3)
+		{
+			// bottom left
 			deltaX = -BallSpeed;
 			deltaY = -BallSpeed;
 		}
+		if (direction == 4)
+		{
+			// bottom right
+			deltaX = -BallSpeed;
+			deltaY = BallSpeed;
+		}
 	}
-
 	// the continous moving updation
 	rectangle.y += (deltaY * timeDelta);
 	rectangle.x += (deltaX * timeDelta);
@@ -119,11 +141,11 @@ void Ball::update(const std::vector<Extension> &temp, double &timeDelta)
 	rectangle.h += (deltaY * timeDelta);
 
 	// Check for players collision
-	if (rectangle.x < 57 && (rectangle.y > temp[0].y && rectangle.y < temp[0].y + 200 ))
+	if (rectangle.x < 57 && (rectangle.y > temp[0].y - 45 && rectangle.y < temp[0].y + 205 ))
 	{
 		deltaX = BallSpeed;
 	}
-	if (rectangle.x > ( ScreenWidth - 55 - 10 - 45 ) && (rectangle.y > temp[1].y && rectangle.y < temp[1].y + 200))
+	if (rectangle.x > ( ScreenWidth - 55 - 10 - 45 ) && (rectangle.y > temp[1].y - 45 && rectangle.y < temp[1].y + 205))
 	{
 		deltaX = -BallSpeed;
 	}
