@@ -36,9 +36,7 @@ public:
 };
 class Ball : public Box
 {
-	// False = ball start go toward left first
-	// True = ball start go toward right first
-	bool decision = false;
+	int direction = 0;
 	Extension initialPosition{};
 	int deltaX = 0, deltaY = 0;
 	void LRDecision();
