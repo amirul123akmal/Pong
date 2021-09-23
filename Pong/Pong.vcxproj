@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hea\box.h" />
+    <ClInclude Include="hea\Extension.h" />
     <ClInclude Include="hea\pong.h" />
   </ItemGroup>
   <ItemGroup>

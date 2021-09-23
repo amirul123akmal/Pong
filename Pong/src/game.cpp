@@ -108,7 +108,7 @@ namespace pong
 			}
 
 			Grouping.update(surface, background);
-			smallBall.update();
+			smallBall.update(Grouping.CoordY());
 			SDL_UpdateWindowSurface(window);
 			limitFPS(Ticks);
 		}
