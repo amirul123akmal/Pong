@@ -1,6 +1,6 @@
 #include <box.h>
 
-// For the Players
+// For the Playerss  
 Box::Box(int x, int y, int w, int h, uint32_t color)
 {
 	image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
@@ -26,18 +26,15 @@ void Box::check()
 	if (rectangle.y >= ScreenHeight - 210)
 	{
 		rectangle.y = ScreenHeight - 210;
-		rectangle.h = ScreenHeight - 210;
 	}
 	if (rectangle.y <= 2)
 	{
 		rectangle.y = 2;
-		rectangle.h = 2;
 	}
 }
 void Box::Update(int h)
 {
 	rectangle.y -= h;
-	rectangle.h -= h;
 	check();
 }
 Extension Box::give() {
@@ -76,7 +73,6 @@ int Ball::random()
 }
 void Ball::Init(const char filename[])
 {
-	moving = random();
 	image = SDL_LoadBMP(filename);
 	if (image != NULL)
 	{
@@ -89,10 +85,14 @@ void Ball::Init(const char filename[])
 	}
 }
 void Ball::LRDecision()
-{
-	if (moving % 2 == 0)
+{	
+	if (random() % 2 == 0)
 	{
 		decision = true;
+	}
+	else
+	{
+		decision = false;
 	}
 }
 void Ball::update(const std::vector<Extension> &temp, double &timeDelta)
@@ -119,11 +119,11 @@ void Ball::update(const std::vector<Extension> &temp, double &timeDelta)
 	rectangle.h += (deltaY * timeDelta);
 
 	// Check for players collision
-	if (rectangle.x < 57 && (rectangle.y >( temp[0].y - 45 ) && rectangle.h < temp[0].h))
+	if (rectangle.x < 57 && (rectangle.y > temp[0].y && rectangle.y < temp[0].y + 200 ))
 	{
 		deltaX = BallSpeed;
 	}
-	if (rectangle.x > ( ScreenWidth - 55 - 10 - 45 ) && (rectangle.y > (temp[1].y - 45)&& rectangle.h < temp[1].h))
+	if (rectangle.x > ( ScreenWidth - 55 - 10 - 45 ) && (rectangle.y > temp[1].y && rectangle.y < temp[1].y + 200))
 	{
 		deltaX = -BallSpeed;
 	}
@@ -131,11 +131,11 @@ void Ball::update(const std::vector<Extension> &temp, double &timeDelta)
 	// Check for Screen Border
 	if (rectangle.x < 5)
 	{
-		deltaX = BallSpeed;
+		reset();
 	}
 	if (rectangle.x > ScreenWidth - 45)
 	{
-		deltaX = -BallSpeed;
+		reset();
 	}
 	if (rectangle.y < 5)
 	{
@@ -145,4 +145,14 @@ void Ball::update(const std::vector<Extension> &temp, double &timeDelta)
 	{
 		deltaY = -BallSpeed;
 	}
+}
+void Ball::reset()
+{
+	rectangle.x = initialPosition.x;
+	rectangle.y = initialPosition.y;
+	rectangle.w = initialPosition.w;	
+	rectangle.h = initialPosition.h;
+	deltaX = 0;
+	deltaY = 0;
+	LRDecision();
 }
