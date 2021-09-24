@@ -38,6 +38,7 @@ public:
 class Ball : public Box
 {
 	int direction = 0;
+	int oldDirection = 0;
 	Extension initialPosition{};
 	int deltaX = 0, deltaY = 0;
 	int left = 0;
@@ -58,11 +59,25 @@ public:
 };
 class Text
 {
-	SDL_Surface* image;
+	SDL_Surface* image = NULL;
 	SDL_Rect coords;
-	TTF_Font *font;
+	TTF_Font *font = NULL;
 	SDL_Color color = { 0, 0, 0 };
 public:
-	Text(const char filename[]);
+	Text(const char filename[], int x, int y, int w, int h, int size);
 	void update(Extension result, SDL_Surface* ScreenOrigin);
+	void normal(std::string sentence, SDL_Surface* surface);
+};
+class mainMenu
+{
+	int x = ScreenWidth / 2 - 300;
+	int ye = ScreenHeight / 2 - 250;
+	int ys = ScreenHeight / 2 + 100;
+	SDL_Surface* escape = NULL;
+	SDL_Surface* spaces = NULL;
+	SDL_Rect esc;
+	SDL_Rect spc;
+public:
+	mainMenu(const char escapefilename[], const char spacefilename[]);
+	void update(SDL_Surface* surface);
 };

@@ -169,7 +169,9 @@
     <ClInclude Include="hea\pong.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\escape.bmp" />
     <Image Include="res\Image.bmp" />
+    <Image Include="res\space.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -40,5 +40,11 @@
     <Image Include="res\Image.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\escape.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\space.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

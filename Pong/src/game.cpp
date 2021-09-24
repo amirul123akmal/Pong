@@ -64,10 +64,7 @@ namespace pong
 		// Mandatory to update the surface that have been modified
 		SDL_UpdateWindowSurface(window);
 
-		// Main Loop toggle variable
-		bool enable_loop = true;
-		SDL_ShowCursor(SDL_DISABLE);
-
+		// START OF THE MAIN LOOP SETTING
 		//  Event Tracking
 		SDL_Event any_event;
 		const uint8_t* keyPressed;
@@ -79,7 +76,22 @@ namespace pong
 		double timeDelta = 0;
 
 		// Text for marks
-		Text marks("res/open-sans/OpenSans-Bold.ttf");
+		Text marks("open-sans/OpenSans-Bold.ttf", ScreenWidth / 2 - 75, 0, 200, 50, 100);
+
+		// Main Loop toggle variable
+		bool enable_loop = true;
+		SDL_ShowCursor(SDL_DISABLE);
+
+		// Main menu setup
+		bool enable_to_play = false;
+		mainMenu start("res/escape.bmp", "res/space.bmp");
+
+		Grouping.update(surface, background);
+		smallBall.update(Grouping.CoordY(), timeDelta);
+		marks.update(smallBall.result(), surface);
+		start.update(surface);
+
+		SDL_UpdateWindowSurface(window);
 
 		// The main loop
 		while (enable_loop)
@@ -119,11 +131,18 @@ namespace pong
 			{
 				player1.Update(-DeltaMove * timeDelta);
 			}
-
-			Grouping.update(surface, background);
-			smallBall.update(Grouping.CoordY(), timeDelta);
-			marks.update(smallBall.result(), surface);
-			SDL_UpdateWindowSurface(window);
+			if (keyPressed[SDL_SCANCODE_SPACE])
+			{
+				enable_to_play = true;
+			}
+			if (enable_to_play)
+			{
+				Grouping.update(surface, background);
+				smallBall.update(Grouping.CoordY(), timeDelta);
+				marks.update(smallBall.result(), surface);
+				SDL_UpdateWindowSurface(window);
+			}
+			
 			limitFPS(time);
 		}
 	}
