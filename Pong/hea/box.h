@@ -30,10 +30,19 @@ public:
 class GroupBox
 {
 	std::vector<Box*> groups;
+	SDL_Surface* bgTemp = NULL;
+	SDL_Surface* screen = NULL;
+	uint32_t background;
+	int choose = 0;
+	uint32_t defaultBG;
+	std::string filePath;
+	void chooseSetting();
 public:
 	void add(Box *box);
-	void update(SDL_Surface *surface, uint32_t color);
+	void update(SDL_Surface*);
 	std::vector<Extension> CoordY();
+	void getBGSetting(int, SDL_Surface*, const char filename[]);
+	void bgUpdate(SDL_Surface*, uint32_t);
 };
 class Ball : public Box
 {

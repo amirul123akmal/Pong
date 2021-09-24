@@ -170,7 +170,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\mainMenu\escape.bmp" />
-    <Image Include="res\move\Image.bmp" />
+    <Image Include="res\maps\map.bmp" />
+    <Image Include="res\move\ball.bmp" />
     <Image Include="res\mainMenu\space.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
