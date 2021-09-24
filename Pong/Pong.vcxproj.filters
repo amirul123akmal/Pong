@@ -37,13 +37,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\Image.bmp">
+    <Image Include="res\move\Image.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\escape.bmp">
+    <Image Include="res\mainMenu\escape.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\space.bmp">
+    <Image Include="res\mainMenu\space.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
