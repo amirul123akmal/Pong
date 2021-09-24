@@ -1,6 +1,6 @@
 # Pong
 ###### This project officially finished : 24 September 2021, 2:31 PM
-###### This project started at : 20 September 2021, 20:27 PM
+###### This project started at : 20 September 2021, 10:27 PM
 <br>
 =============================
 <br>
