@@ -54,7 +54,7 @@ namespace pong
 
 		// Ball 
 		Ball smallBall(( ScreenWidth / 2 ) - 25 , ( ScreenHeight / 2 ) -25, 32, 32, red);
-		smallBall.Init("res/Image.bmp");
+		smallBall.Init("res/move/ball.bmp");
 		Grouping.add(&smallBall);
 
 		// For the background 
@@ -84,7 +84,7 @@ namespace pong
 
 		// Main menu setup
 		bool enable_to_play = false;
-		mainMenu start("res/escape.bmp", "res/space.bmp");
+		mainMenu start("res/mainMenu/escape.bmp", "res/mainMenu/space.bmp");
 
 		Grouping.update(surface, background);
 		smallBall.update(Grouping.CoordY(), timeDelta);
