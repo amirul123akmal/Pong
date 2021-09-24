@@ -86,19 +86,19 @@ void Ball::Init(const char filename[])
 void Ball::LRDecision()
 {	
 	int temp = random();
-	if (temp < 75)
+	if (temp > 75)
 	{
 		direction = 1;
 	}
-	if ( temp >= 75 && temp < 50)
+	if ( temp <= 75 && temp > 50)
 	{
 		direction = 2;
 	}
-	if (temp >= 50 && temp < 25)
+	if (temp <= 50 && temp > 25)
 	{
 		direction = 3;
 	}
-	if (temp >= 25)
+	if (temp <= 25)
 	{
 		direction = 4;
 	}
@@ -189,17 +189,42 @@ Extension Ball::result()
 }
 
 // Text
-Text::Text(const char filename[])
+Text::Text(const char filename[], int x, int y, int w = 0, int h = 0, int size = 100)
 {
-	coords.x = ScreenWidth / 2 - 75;
-	coords.y = 0;
-	coords.w = 200;
-	coords.h = 50;
- 	font = TTF_OpenFont("open-sans/OpenSans-Bold.ttf", 100);
+	coords.x = x;
+	coords.y = y;
+	coords.w = w;
+	coords.h = h;
+ 	font = TTF_OpenFont(filename, size);
 }
 void Text::update(Extension result, SDL_Surface* ScreenOrigin)
 {
 	std::string character = std::to_string(result.y) + " : " + std::to_string(result.x);
 	image = TTF_RenderText_Solid(font, character.c_str(), color);
 	SDL_BlitSurface(image, NULL, ScreenOrigin, &coords);
+}
+void Text::normal(std::string sentence, SDL_Surface * surface)
+{
+	image = TTF_RenderText_Solid(font, sentence.c_str(), color);
+	SDL_BlitSurface(image, NULL, surface, &coords);
+}
+
+// Main menu
+mainMenu::mainMenu(const char escapefilename[], const char spacefilename[])
+{
+	
+	spc.x = esc.x = x;
+	esc.y = ye;
+	spc.y = ys;
+	escape = SDL_LoadBMP(escapefilename);
+	spaces = SDL_LoadBMP(spacefilename);
+}
+void mainMenu::update(SDL_Surface* surface)
+{
+	Text ESCText("open-sans/OpenSans-Bold.ttf", x + 300, ye + 25, 0, 0, 65);
+	Text SPCText("open-sans/OpenSans-Bold.ttf", x + 300, ys , 0, 0, 65);
+	SDL_BlitSurface(escape, NULL, surface, &esc);
+	SDL_BlitSurface(spaces, NULL, surface, &spc);
+	ESCText.normal("For Exit", surface);
+	SPCText.normal("For Start", surface);
 }
