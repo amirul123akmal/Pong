@@ -23,7 +23,7 @@ run `Pong.exe` and have fun<br>
 - SDL2_ttf 
 
 =============================
-## Compile yourself
+## How you can compile yourself
 1. Make sure you have all `.dll` for each dependencies ready in your windows `path Environment`
 2. Open the Solution `Pong.sln`
 3. Right click the project and press `build`
