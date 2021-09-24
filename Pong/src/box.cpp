@@ -49,9 +49,9 @@ void GroupBox::add(Box *box)
 {
 	groups.push_back(box);
 }
-void GroupBox::update(SDL_Surface* surface, uint32_t color)
+void GroupBox::update(SDL_Surface* surface)
 {
-	SDL_FillRect(surface, NULL, color);
+	bgUpdate(surface, defaultBG);
 	for (int i = 0 ; i < groups.size() ; i++)
 	{
 		groups[i]->Draw(surface);
@@ -62,6 +62,36 @@ std::vector<Extension> GroupBox::CoordY() {
 	temp.push_back(groups[0]->give());
 	temp.push_back(groups[1]->give());
 	return temp;
+}
+void GroupBox::chooseSetting()
+{
+	if (choose == 1) {
+		background = SDL_MapRGB(bgTemp->format, 255, 255, 255);
+	}
+	if (choose  == 2)
+	{
+		screen = SDL_LoadBMP(filePath.c_str());
+	}
+}
+void GroupBox::getBGSetting(int choosing, SDL_Surface* surface, const char filename[])
+{
+	filePath = filename;
+	choose = choosing;
+	bgTemp = surface;
+	defaultBG = SDL_MapRGB(bgTemp->format, 255, 255, 255);
+	chooseSetting();
+}
+void GroupBox::bgUpdate(SDL_Surface* surface, uint32_t color)
+{
+	if (choose == 1)
+	{
+		SDL_FillRect(surface, NULL, color);
+	}
+	if (choose == 2)
+	{
+		SDL_BlitSurface(screen, NULL, surface, NULL);
+	}
+
 }
 
 // Ball 
@@ -208,7 +238,7 @@ void Text::normal(std::string sentence, SDL_Surface * surface)
 	image = TTF_RenderText_Solid(font, sentence.c_str(), color);
 	SDL_BlitSurface(image, NULL, surface, &coords);
 }
-
+ 
 // Main menu
 mainMenu::mainMenu(const char escapefilename[], const char spacefilename[])
 {
@@ -221,10 +251,12 @@ mainMenu::mainMenu(const char escapefilename[], const char spacefilename[])
 }
 void mainMenu::update(SDL_Surface* surface)
 {
-	Text ESCText("open-sans/OpenSans-Bold.ttf", x + 300, ye + 25, 0, 0, 65);
-	Text SPCText("open-sans/OpenSans-Bold.ttf", x + 300, ys , 0, 0, 65);
+	Text ESCText("open-sans/OpenSans-Bold.ttf", x + 320, ye + 25, 0, 0, 65);
+	Text SPCText("open-sans/OpenSans-Bold.ttf", x + 320, ys , 0, 0, 65);
+	Text PauseText("open-sans/OpenSans-Bold.ttf", x + 750, ye +700, 0, 0, 65);
 	SDL_BlitSurface(escape, NULL, surface, &esc);
 	SDL_BlitSurface(spaces, NULL, surface, &spc);
 	ESCText.normal("For Exit", surface);
 	SPCText.normal("For Start", surface);
+	PauseText.normal("P For Pause", surface);
 }

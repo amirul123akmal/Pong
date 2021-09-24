@@ -54,12 +54,13 @@ namespace pong
 
 		// Ball 
 		Ball smallBall(( ScreenWidth / 2 ) - 25 , ( ScreenHeight / 2 ) -25, 32, 32, red);
-		smallBall.Init("res/move/ball.bmp");
+		smallBall.Init("res/move/transball.bmp");
 		Grouping.add(&smallBall);
 
 		// For the background 
-		uint32_t background = SDL_MapRGB(surface->format, 255, 255, 255);
-		SDL_FillRect(surface, NULL, background);
+		// if `choose` is more than 1, please change the third parameter to the corret file that you want
+		int choose = 2;
+		Grouping.getBGSetting(choose, surface, "res/maps/map2.bmp");
 
 		// Mandatory to update the surface that have been modified
 		SDL_UpdateWindowSurface(window);
@@ -76,7 +77,7 @@ namespace pong
 		double timeDelta = 0;
 
 		// Text for marks
-		Text marks("open-sans/OpenSans-Bold.ttf", ScreenWidth / 2 - 75, 0, 200, 50, 100);
+		Text marks("open-sans/OpenSans-Bold.ttf", ScreenWidth / 2 - 95, 0, 200, 50, 100);
 
 		// Main Loop toggle variable
 		bool enable_loop = true;
@@ -86,7 +87,7 @@ namespace pong
 		bool enable_to_play = false;
 		mainMenu start("res/mainMenu/escape.bmp", "res/mainMenu/space.bmp");
 
-		Grouping.update(surface, background);
+		Grouping.update(surface);
 		smallBall.update(Grouping.CoordY(), timeDelta);
 		marks.update(smallBall.result(), surface);
 		start.update(surface);
@@ -135,14 +136,16 @@ namespace pong
 			{
 				enable_to_play = true;
 			}
+			if (keyPressed[SDL_SCANCODE_P]) {
+				enable_to_play = false;
+			}
 			if (enable_to_play)
 			{
-				Grouping.update(surface, background);
+				Grouping.update(surface);
 				smallBall.update(Grouping.CoordY(), timeDelta);
 				marks.update(smallBall.result(), surface);
 				SDL_UpdateWindowSurface(window);
 			}
-			
 			limitFPS(time);
 		}
 	}
