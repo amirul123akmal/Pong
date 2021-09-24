@@ -253,8 +253,10 @@ void mainMenu::update(SDL_Surface* surface)
 {
 	Text ESCText("open-sans/OpenSans-Bold.ttf", x + 320, ye + 25, 0, 0, 65);
 	Text SPCText("open-sans/OpenSans-Bold.ttf", x + 320, ys , 0, 0, 65);
+	Text PauseText("open-sans/OpenSans-Bold.ttf", x + 750, ye +700, 0, 0, 65);
 	SDL_BlitSurface(escape, NULL, surface, &esc);
 	SDL_BlitSurface(spaces, NULL, surface, &spc);
 	ESCText.normal("For Exit", surface);
 	SPCText.normal("For Start", surface);
+	PauseText.normal("P For Pause", surface);
 }
